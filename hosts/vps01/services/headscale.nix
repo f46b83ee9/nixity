@@ -5,7 +5,7 @@
 }:
 let
   base_domain = "vfd.ovh";
-  server_url = "headscale.${base_domain}";
+  server_url = "ztna.${base_domain}";
 in
 {
   services.headscale = {
