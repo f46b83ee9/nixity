@@ -13,6 +13,7 @@
     ./networking.nix
     ./secrets.nix
     ./wireguard.nix
+    ./backup.nix
     ./services/headscale.nix
   ];
 
@@ -24,6 +25,7 @@
   environment.systemPackages = [
     pkgs.sops
     pkgs.age
+    pkgs.restic
   ];
 
   system.stateVersion = "25.11";

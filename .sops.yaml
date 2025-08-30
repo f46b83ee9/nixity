@@ -3,6 +3,11 @@ keys:
 - &vps01_key age1dc5hjh2fttdlpzq3uyq953ddkjsauh8gxqscv4ea9wsf5k28uyksds0rxw
 
 creation_rules:
+- path_regex: 'secrets/common/[^/]+\.(yaml|json|env|ini)$'
+  key_groups:
+  - age:
+    - *my_key
+    - *vps01_key
 - path_regex: 'secrets/vps01/[^/]+\.(yaml|json|env|ini)$'
   key_groups:
   - age:
