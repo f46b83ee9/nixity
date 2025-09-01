@@ -38,8 +38,6 @@ in
     };
   };
 
-  services.nginx.enable = true;
-
   services.nginx.virtualHosts."${server_url}" = {
     forceSSL = true;
     enableACME = true;

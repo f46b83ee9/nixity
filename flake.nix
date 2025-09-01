@@ -2,7 +2,7 @@
   description = "nixos configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -12,10 +12,6 @@
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixos-anywhere = {
-      url = "github:nix-community/nixos-anywhere";
     };
   };
 
@@ -28,6 +24,14 @@
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
           ./hosts/vps01/configuration.nix
+        ];
+      };
+
+      nixosConfigurations.rpi01 = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          sops-nix.nixosModules.sops
+          ./hosts/rpi01/configuration.nix
         ];
       };
     };

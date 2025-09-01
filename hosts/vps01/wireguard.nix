@@ -1,7 +1,10 @@
 {
-  config, ...
+  config,
+  ...
 }:
 {
+  sops.secrets."wireguard/private_key" = { };
+
   networking.wireguard.enable = true;
 
   networking.wireguard.interfaces = {

@@ -1,0 +1,51 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  imports = [
+    ../common/default.nix
+    ./disk-configuration.nix
+    ./hardware-overlay.nix
+    ./networking.nix
+    ./backup.nix
+    ./services/pocket-id.nix
+    ./services/cloudflared.nix
+  ];
+
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
+  boot.initrd.availableKernelModules = [ 
+      "xhci_pci"
+      "usbhid"
+      "usb_storage"
+      "vc4"
+      "pcie_brcmstb" # required for the pcie bus to work
+      "reset-raspberrypi" # required for vl805 firmware to load
+  ];
+
+  boot.loader.grub.enable = false;
+  boot.loader.generic-extlinux-compatible.enable = true;  
+
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.defaultSopsFile = ../../secrets/rpi01/secrets.yaml;
+
+  services.nginx.enable = true;
+
+  environment.systemPackages = [
+    pkgs.libraspberrypi
+    pkgs.raspberrypi-eeprom
+
+    pkgs.sops
+    pkgs.age
+    pkgs.restic
+  ];
+
+  hardware.deviceTree.filter = "bcm2711-rpi-*.dtb";
+  hardware.enableRedistributableFirmware = true;
+
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+
+  system.stateVersion = "25.11";
+}

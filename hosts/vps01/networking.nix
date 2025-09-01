@@ -4,13 +4,6 @@
 
   networking.useDHCP = false;
 
-  networking.nameservers = [ 
-    "1.1.1.3"
-    "1.0.0.3"
-    "2606:4700:4700::1113"
-    "2606:4700:4700::1003"
-  ];
-
   networking.interfaces.ens3.ipv4.addresses = [
     {
       address = "51.77.158.149";
@@ -34,4 +27,11 @@
     address = "2001:41d0:305:2100::1";
     interface = "ens3";
   };
+
+  networking.nameservers = [
+    "1.1.1.3"
+    "1.0.0.3"
+    "2606:4700:4700::1113"
+    "2606:4700:4700::1003"
+  ];
 }

@@ -1,6 +1,7 @@
 keys:
 - &my_key age1hmyfj4fr0dnq8209nfxjjq42edugkv8tal3gxyz2z03jj5ch2ggqsm55ks
 - &vps01_key age1dc5hjh2fttdlpzq3uyq953ddkjsauh8gxqscv4ea9wsf5k28uyksds0rxw
+- &rpi01_key age1g5kyc7eh6tyszmnuarprur3jhrtk7ey8n4qw77temsp8qg6g7fvs5m2zg7
 
 creation_rules:
 - path_regex: 'secrets/common/[^/]+\.(yaml|json|env|ini)$'
@@ -8,8 +9,14 @@ creation_rules:
   - age:
     - *my_key
     - *vps01_key
+    - *rpi01_key
 - path_regex: 'secrets/vps01/[^/]+\.(yaml|json|env|ini)$'
   key_groups:
   - age:
     - *my_key
     - *vps01_key
+- path_regex: 'secrets/rpi01/[^/]+\.(yaml|json|env|ini)$'
+  key_groups:
+  - age:
+    - *my_key
+    - *rpi01_key
