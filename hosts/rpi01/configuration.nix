@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   lib,
   pkgs,
@@ -16,17 +17,17 @@
   ];
 
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
-  boot.initrd.availableKernelModules = [ 
-      "xhci_pci"
-      "usbhid"
-      "usb_storage"
-      "vc4"
-      "pcie_brcmstb" # required for the pcie bus to work
-      "reset-raspberrypi" # required for vl805 firmware to load
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "usbhid"
+    "usb_storage"
+    "vc4"
+    "pcie_brcmstb" 
+    "reset-raspberrypi"
   ];
 
   boot.loader.grub.enable = false;
-  boot.loader.generic-extlinux-compatible.enable = true;  
+  boot.loader.generic-extlinux-compatible.enable = true;
 
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.defaultSopsFile = ../../secrets/rpi01/secrets.yaml;
@@ -36,6 +37,7 @@
   environment.systemPackages = [
     pkgs.libraspberrypi
     pkgs.raspberrypi-eeprom
+    pkgs.ubootRaspberryPi4_64bit
 
     pkgs.sops
     pkgs.age
@@ -47,5 +49,6 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
+  system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
   system.stateVersion = "25.11";
 }

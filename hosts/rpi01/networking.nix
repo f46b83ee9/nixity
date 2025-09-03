@@ -6,7 +6,7 @@
 
   networking.interfaces.end0.ipv4.addresses = [
     {
-      address = "192.168.10.240";
+      address = "192.168.10.177";
       prefixLength = 24;
     }
   ];

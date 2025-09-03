@@ -10,14 +10,14 @@ in
 {
   sops.secrets."pocketid/encryption_key" = {
     owner = config.services.pocket-id.user;
-    group = config.services.pocket-id.group;
+    inherit (config.services.pocket-id) group;
   };
 
   sops.secrets."smtp/password" = {
     sopsFile = ../../../secrets/common/smtp.yaml;
 
     owner = config.services.pocket-id.user;
-    group = config.services.pocket-id.group;
+    inherit (config.services.pocket-id) group;
   };
 
   services.pocket-id = {
