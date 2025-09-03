@@ -44,7 +44,8 @@
     pkgs.restic
   ];
 
-  hardware.deviceTree.filter = "bcm2711-rpi-*.dtb";
+  hardware.deviceTree.enable = true;
+  hardware.deviceTree.filter = "*rpi-4-*.dtb";
   hardware.enableRedistributableFirmware = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
