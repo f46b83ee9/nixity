@@ -1,23 +1,18 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}:
+{ pkgs, lib, config, ... }:
 let
   configTxt = pkgs.writeText "config.txt" ''
     [pi4]
     kernel=u-boot-rpi4.bin
     enable_gic=1
-
     disable_overscan=1
-
     arm_boost=1
+
+    [cm4]
+    otg_mode=1
 
     [all]
     arm_64bit=1
     enable_uart=1
-
     avoid_warnings=1
   '';
 in
@@ -41,8 +36,10 @@ in
       rm -f /disko-first-boot
     fi
   '';
-
   disko = {
+    memSize = 6144;
+    imageBuilder.qemu = (import pkgs.path { system = "x86_64-linux"; }).qemu + "/bin/qemu-system-aarch64 -M virt -cpu cortex-a57";
+    imageBuilder.kernelPackages = pkgs.linuxPackages_latest;
     imageBuilder.extraPostVM = ''
       ${pkgs.zstd}/bin/zstd --compress $out/*raw
       rm $out/*raw
@@ -68,13 +65,11 @@ in
                   type = "filesystem";
                   format = "vfat";
                   mountpoint = "/firmware";
-                  postMountHook = toString (
-                    pkgs.writeScript "postMountHook.sh" ''
-                      (cd ${pkgs.raspberrypifw}/share/raspberrypi/boot && cp bootcode.bin fixup*.dat start*.elf *.dtb /mnt/firmware/)
-                      cp ${pkgs.ubootRaspberryPi4_64bit}/u-boot.bin /mnt/firmware/u-boot-rpi4.bin
-                      cp ${configTxt} /mnt/firmware/config.txt
-                    ''
-                  );
+                  postMountHook = toString (pkgs.writeScript "postMountHook.sh" ''
+                    (cd ${pkgs.raspberrypifw}/share/raspberrypi/boot && cp bootcode.bin fixup*.dat start*.elf *.dtb /mnt/firmware/)
+                    cp ${pkgs.ubootRaspberryPi4_64bit}/u-boot.bin /mnt/firmware/u-boot-rpi4.bin
+                    cp ${configTxt} /mnt/firmware/config.txt
+                  '');
                 };
               };
               boot = {
@@ -91,16 +86,12 @@ in
                 size = "100%";
                 content = {
                   type = "filesystem";
-                  format = "ext4";
+                  extraArgs = [ "--compression=zstd" ];
+                  format = "bcachefs";
                   mountpoint = "/";
-                  mountOptions = [
-                    "noatime"
-                  ];
-                  postMountHook = toString (
-                    pkgs.writeScript "postMountHook.sh" ''
-                      touch /mnt/disko-first-boot
-                    ''
-                  );
+                  postMountHook = toString (pkgs.writeScript "postMountHook.sh" ''
+                    touch /mnt/disko-first-boot
+                  '');
                 };
               };
             };

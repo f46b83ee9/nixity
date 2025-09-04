@@ -47,6 +47,7 @@
   hardware.deviceTree.enable = true;
   hardware.deviceTree.filter = "*rpi-4-*.dtb";
   hardware.enableRedistributableFirmware = true;
+  hardware.enableAllHardware = lib.mkForce false;
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
