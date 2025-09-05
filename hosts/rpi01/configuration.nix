@@ -56,7 +56,7 @@
   hardware.enableRedistributableFirmware = true;
   hardware.enableAllHardware = lib.mkForce false;
 
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+  nixpkgs.hostPlatform = "aarch64-linux";
 
   system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
   system.stateVersion = "25.11";
