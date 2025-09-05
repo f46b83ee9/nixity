@@ -37,17 +37,10 @@ in
     fi
   '';
   disko = {
-    memSize = 6144;
     imageBuilder = {
         enableBinfmt = true;
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
         kernelPackages = inputs.nixpkgs.legacyPackages.x86_64-linux.linuxPackages_latest;
-
-        qemu = (import pkgs.path { system = "x86_64-linux"; }).qemu + "/bin/qemu-system-aarch64 -M virt -cpu cortex-a57";
-        extraPostVM = ''
-            ${pkgs.zstd}/bin/zstd --compress $out/*raw
-            rm $out/*raw
-        '';
     };
     devices = {
       disk = {
