@@ -87,7 +87,7 @@ in
                 content = {
                   type = "filesystem";
                   extraArgs = [ "--compression=zstd" ];
-                  format = "bcachefs";
+                  format = "ext4";
                   mountpoint = "/";
                   postMountHook = toString (pkgs.writeScript "postMountHook.sh" ''
                     touch /mnt/disko-first-boot

@@ -12,7 +12,7 @@
   ];
 
   networking.defaultGateway = {
-    address = "51.77.156.1";
+    address = "51.75.248.1";
     interface = "ens3";
   };
 

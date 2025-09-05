@@ -41,6 +41,7 @@ in
   services.nginx.virtualHosts."${server_url}" = {
     forceSSL = true;
     enableACME = true;
+    acmeRoot = null;
 
     locations."/headscale." = {
       extraConfig = ''
@@ -83,9 +84,20 @@ in
     '';
   };
 
-  security.acme = {
-    acceptTerms = true;
-    defaults.email = "me@${base_domain}";
+  sops.secrets."cloudflare/env" = {
+    sopsFile = ../../../secrets/common/cloudflare.yaml;
+  };
+
+  security.acme.acceptTerms = true;
+  security.acme.defaults = {
+      email = "me@${base_domain}";
+
+      dnsProvider = "cloudflare";
+      dnsResolver = "1.1.1.1:53";
+
+      environmentFile = config.sops.secrets."cloudflare/env".path;
+      
+      group = config.services.nginx.group;
   };
 
   networking.firewall.allowedTCPPorts = [

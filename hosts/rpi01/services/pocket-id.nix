@@ -52,6 +52,7 @@ in
   services.nginx.virtualHosts."${server_url}" = {
     forceSSL = true;
     enableACME = true;
+    acmeRoot = null;
 
     locations."/metrics" = {
       proxyPass = "http://127.0.0.1:${toString config.services.pocket-id.settings.OTEL_EXPORTER_PROMETHEUS_PORT}";
@@ -75,16 +76,16 @@ in
     sopsFile = ../../../secrets/common/cloudflare.yaml;
   };
 
-  security.acme = {
-    acceptTerms = true;
-    defaults.email = "me@${base_domain}";
+  security.acme.acceptTerms = true;
+  security.acme.defaults = {
+      email = "me@${base_domain}";
 
-    certs."${server_url}" = {
       dnsProvider = "cloudflare";
       dnsResolver = "1.1.1.1:53";
+
       environmentFile = config.sops.secrets."cloudflare/env".path;
-      webroot = null;
-    };
+      
+      group = config.services.nginx.group;
   };
 
   networking.firewall.allowedTCPPorts = [
