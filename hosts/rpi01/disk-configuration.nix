@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ inputs, pkgs, lib, config, ... }:
 let
   configTxt = pkgs.writeText "config.txt" ''
     [pi4]
