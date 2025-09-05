@@ -23,6 +23,9 @@
     "aarch64-linux"
   ];
 
+  nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
+  boot.binfmt.addEmulatedSystemsToNixSandbox = true;
+
   boot.loader.grub = {
     efiSupport = true;
     efiInstallAsRemovable = true;

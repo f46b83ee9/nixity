@@ -17,6 +17,13 @@
   ];
 
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
+  
+  boot.kernelParams = [
+    "console=ttyS0,115200n8"
+    "console=ttyAMA0,115200n8"
+    "console=tty0"
+  ];
+
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "usbhid"
