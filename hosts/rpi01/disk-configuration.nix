@@ -86,7 +86,6 @@ in
                 size = "100%";
                 content = {
                   type = "filesystem";
-                  extraArgs = [ "--compression=zstd" ];
                   format = "ext4";
                   mountpoint = "/";
                   postMountHook = toString (pkgs.writeScript "postMountHook.sh" ''
