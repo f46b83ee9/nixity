@@ -37,6 +37,8 @@ in
 
       UI_CONFIG_DISABLED = true;
 
+      EMAILS_VERIFIED = true;
+
       SMTP_HOST = "smtp-relay.brevo.com";
       SMTP_PORT = 587;
       SMTP_FROM = "no-reply@${base_domain}";
