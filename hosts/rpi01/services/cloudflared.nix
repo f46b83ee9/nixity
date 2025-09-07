@@ -16,7 +16,7 @@
 
     default = "http_status:404";
     ingress = {
-      "id.vfd.ovh" = "http://localhost:8080";
+      "key.vfd.ovh" = "http://localhost:8080";
     };
   };
 }

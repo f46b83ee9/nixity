@@ -5,7 +5,7 @@
 }:
 let
   base_domain = "vfd.ovh";
-  server_url = "id.${base_domain}";
+  server_url = "key.${base_domain}";
 in
 {
   sops.secrets."pocketid/encryption_key" = {

@@ -5,9 +5,14 @@
 }:
 let
   base_domain = "vfd.ovh";
-  server_url = "ztna.${base_domain}";
+  server_url = "headscale.${base_domain}";
 in
 {
+  sops.secrets."headscale/oidc_client_secret" = {
+    owner = config.services.headscale.user;
+    group = config.services.headscale.group;
+  };
+
   services.headscale = {
     enable = true;
 
@@ -21,6 +26,24 @@ in
       grpc_allow_insecure = true;
 
       metrics_listen_addr = "127.0.0.1:9090";
+
+      oidc = {
+        issuer = "https://key.vfd.ovh";
+        client_id = "fac68529-32af-47f6-94ed-6f584fa0ebb7";
+        client_secret_path = config.sops.secrets."headscale/oidc_client_secret".path;
+
+        scope = [
+          "openid"
+          "profile"
+          "email"
+          "groups"
+        ];
+
+        pkce = {
+          enabled = true;
+          method = "S256";
+        };
+      };
 
       dns = {
         magic_dns = true;
@@ -65,6 +88,8 @@ in
 
     locations."/" = {
       proxyPass = "http://127.0.0.1:${toString config.services.headscale.port}";
+      proxyWebsockets = true;
+
       extraConfig = ''
         keepalive_requests          100000;
         keepalive_timeout           160s;
