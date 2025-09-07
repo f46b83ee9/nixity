@@ -94,7 +94,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-result/
+result
 *.img
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,linux,visualstudiocode,windows
