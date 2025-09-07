@@ -1,24 +1,24 @@
 {
-  networking.hostName = "vps01";
+  networking.hostName = "vps02";
   networking.domain = "vfd.ovh";
 
   networking.useDHCP = false;
 
   networking.interfaces.ens3.ipv4.addresses = [
     {
-      address = "51.77.158.149";
+      address = "51.75.252.175";
       prefixLength = 32;
     }
   ];
 
   networking.defaultGateway = {
-    address = "51.77.156.1";
+    address = "51.75.248.1";
     interface = "ens3";
   };
 
   networking.interfaces.ens3.ipv6.addresses = [
     {
-      address = "2001:41d0:305:2100::a470";
+      address = "2001:41d0:305:2100::4a84";
       prefixLength = 128;
     }
   ];

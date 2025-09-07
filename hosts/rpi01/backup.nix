@@ -19,7 +19,7 @@
 
       paths = [
         "/var/lib/acme"
-        "/var/lib/headscale"
+        "/var/lib/pocket-id"
       ];
 
       repository = "sftp::/restic";

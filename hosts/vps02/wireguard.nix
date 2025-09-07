@@ -11,7 +11,7 @@
     wireguard0 = {
       privateKeyFile = config.sops.secrets."wireguard/private_key".path;
 
-      ips = [ "192.168.27.75/32" ];
+      ips = [ "192.168.27.76/32" ];
       listenPort = 7281;
       mtu = 1360;
 
