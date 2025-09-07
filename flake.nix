@@ -50,7 +50,6 @@
 
         system = "aarch64-linux";
         modules = [
-          disko.nixosModules.disko
           sops-nix.nixosModules.sops
           ./hosts/rpi01/configuration.nix
         ];
