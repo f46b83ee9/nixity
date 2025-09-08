@@ -15,8 +15,6 @@
     address = "127.0.0.1";
     port = 8080;
 
-    settings.headscale.config_path = config.services.headplane.settings.headscale.config_path;
-
     settings = {
       server_url = "https://headscale.vfd.ovh";
 
