@@ -51,7 +51,7 @@
 
       dns = {
         magic_dns = true;
-        base_domain = "tailnet.${base_domain}";
+        base_domain = "tailnet.vfd.ovh";
 
         nameservers.global = [
           "1.1.1.3"
