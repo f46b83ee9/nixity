@@ -30,12 +30,6 @@
       priority = 2;
     };
 
-    locations."/admin" = {
-      proxyPass = "http://127.0.0.1:${toString config.services.headplane.settings.server.port}";
-
-      priority = 3;
-    };
-
     locations."/" = {
       proxyPass = "http://127.0.0.1:${toString config.services.headscale.port}";
       proxyWebsockets = true;

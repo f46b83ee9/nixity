@@ -16,7 +16,6 @@
     ./backup.nix
     ./services/nginx.nix
     ./services/headscale.nix
-    ./services/headplane.nix
   ];
 
   boot.initrd.availableKernelModules = [ "virtio_scsi" ];
