@@ -20,6 +20,7 @@
       paths = [
         "/var/lib/acme"
         "/var/lib/headscale"
+        "/var/lib/headplane"
       ];
 
       repository = "sftp::/restic";

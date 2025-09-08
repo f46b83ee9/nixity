@@ -16,12 +16,15 @@
     nix-rosetta-builder.url = "github:cpick/nix-rosetta-builder";
     nix-rosetta-builder.inputs.nixpkgs.follows = "nixpkgs";
 
+    headplane.url = "github:tale/headplane";
+    headplane.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
     inputs@{
       self,
       nixpkgs,
+      headplane,
       disko,
       sops-nix,
       nix-darwin, 
@@ -39,6 +42,7 @@
         modules = [
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
+          headplane.nixosModules.headplane
           ./hosts/vps01/configuration.nix
         ];
       };

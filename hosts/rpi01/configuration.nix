@@ -12,6 +12,7 @@
     ../common/default.nix
     ./networking.nix
     ./backup.nix
+    ./services/nginx.nix
     ./services/pocket-id.nix
     ./services/cloudflared.nix
   ];
@@ -33,8 +34,6 @@
 
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.defaultSopsFile = ../../secrets/rpi01/secrets.yaml;
-
-  services.nginx.enable = true;
 
   environment.systemPackages = [
     pkgs.sops
