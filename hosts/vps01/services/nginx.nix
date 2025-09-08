@@ -1,4 +1,8 @@
 {
+  config, 
+  ...
+}:
+{
   services.nginx.enable = true;
 
   services.nginx.virtualHosts."headscale.vfd.ovh" = {
