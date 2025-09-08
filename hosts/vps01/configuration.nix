@@ -4,6 +4,7 @@
   lib,
   pkgs,
   modulesPath,
+  headplane,
   ...
 }:
 {
