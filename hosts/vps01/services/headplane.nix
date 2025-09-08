@@ -40,6 +40,10 @@ in
 
   services.headplane = {
     enable = true;
+
+    agent = {
+      enable = false;
+    };
     
     settings = {
       server = {
