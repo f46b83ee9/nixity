@@ -9,14 +9,26 @@
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+  
+    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    
+    nix-rosetta-builder.url = "github:cpick/nix-rosetta-builder";
+    nix-rosetta-builder.inputs.nixpkgs.follows = "nixpkgs";
+
+    headplane.url = "github:tale/headplane";
+    headplane.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
     inputs@{
       self,
       nixpkgs,
+      headplane,
       disko,
       sops-nix,
+      nix-darwin, 
+      nix-rosetta-builder,
       ...
     }:
     let
@@ -30,6 +42,7 @@
         modules = [
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
+          headplane.nixosModules.headplane
           ./hosts/vps01/configuration.nix
         ];
       };
@@ -52,6 +65,15 @@
         modules = [
           sops-nix.nixosModules.sops
           ./hosts/rpi01/configuration.nix
+        ];
+      };
+
+      darwinConfigurations."Dimitris-MacBook-Air" = nix-darwin.lib.darwinSystem {
+        inherit specialArgs;
+
+        modules = [ 
+          nix-rosetta-builder.darwinModules.default
+          ./hosts/mba/configuration.nix
         ];
       };
     };

@@ -14,6 +14,7 @@
     ./networking.nix
     ./wireguard.nix
     ./backup.nix
+    ./services/nginx.nix
     ./services/headscale.nix
   ];
 
@@ -28,13 +29,13 @@
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.defaultSopsFile = ../../secrets/vps01/secrets.yaml;
 
-  services.nginx.enable = true;
-
   environment.systemPackages = [
     pkgs.sops
     pkgs.age
     pkgs.restic
   ];
+
+  nixpkgs.overlays = [ inputs.headplane.overlays.default ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 

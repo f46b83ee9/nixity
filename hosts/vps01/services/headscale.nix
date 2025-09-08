@@ -3,10 +3,6 @@
   pkgs,
   ...
 }:
-let
-  base_domain = "vfd.ovh";
-  server_url = "headscale.${base_domain}";
-in
 {
   sops.secrets."headscale/oidc_client_secret" = {
     owner = config.services.headscale.user;
@@ -20,12 +16,18 @@ in
     port = 8080;
 
     settings = {
-      server_url = "https://${server_url}";
+      server_url = "https://headscale.vfd.ovh";
 
       grpc_listen_addr = "127.0.0.1:50443";
       grpc_allow_insecure = true;
 
       metrics_listen_addr = "127.0.0.1:9090";
+
+      prefixes = {
+        v4 = "100.64.0.0/10";
+        v6 = "fd7a:115c:a1e0::/48";
+        allocation = "random";
+      };
 
       oidc = {
         issuer = "https://key.vfd.ovh";
@@ -47,7 +49,7 @@ in
 
       dns = {
         magic_dns = true;
-        base_domain = "tailnet.${base_domain}";
+        base_domain = "tailnet.vfd.ovh";
 
         nameservers.global = [
           "1.1.1.3"
@@ -58,76 +60,15 @@ in
           "192.168.10.215"
         ];
       };
+
+      policy = {
+        mode = "file";
+        path = "/var/lib/headscale/acl.json";
+      };
     };
-  };
-
-  services.nginx.virtualHosts."${server_url}" = {
-    forceSSL = true;
-    enableACME = true;
-    acmeRoot = null;
-
-    locations."/headscale." = {
-      extraConfig = ''
-        grpc_pass grpc://${config.services.headscale.settings.grpc_listen_addr};
-      '';
-
-      priority = 1;
-    };
-
-    locations."~ ^/(?:metrics|debug)(?:$|/)" = {
-      proxyPass = "http://${config.services.headscale.settings.metrics_listen_addr}";
-      extraConfig = ''
-        allow 192.168.10.0/24;    # LAN
-        allow 192.168.27.64/27;   # Wireguard
-        allow 100.64.0.0/16;      # Tailnet
-        deny all;
-      '';
-
-      priority = 2;
-    };
-
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:${toString config.services.headscale.port}";
-      proxyWebsockets = true;
-
-      extraConfig = ''
-        keepalive_requests          100000;
-        keepalive_timeout           160s;
-        proxy_buffering             off;
-        proxy_connect_timeout       75;
-        proxy_ignore_client_abort   on;
-        proxy_read_timeout          900s;
-        proxy_send_timeout          600;
-        send_timeout                600;
-      '';
-
-      priority = 99;
-    };
-
-    extraConfig = ''
-      access_log /var/log/nginx/${server_url}.access.log;
-    '';
-  };
-
-  sops.secrets."cloudflare/env" = {
-    sopsFile = ../../../secrets/common/cloudflare.yaml;
-  };
-
-  security.acme.acceptTerms = true;
-  security.acme.defaults = {
-      email = "me@${base_domain}";
-
-      dnsProvider = "cloudflare";
-      dnsResolver = "1.1.1.1:53";
-
-      environmentFile = config.sops.secrets."cloudflare/env".path;
-      
-      group = config.services.nginx.group;
   };
 
   networking.firewall.allowedTCPPorts = [
-    80
-    443
     3478 # STUN Derp
   ];
 }
