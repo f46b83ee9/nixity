@@ -25,6 +25,12 @@
 
       metrics_listen_addr = "127.0.0.1:9090";
 
+      prefixes = {
+        v4 = "100.64.0.0/10";
+        v6 = "fd7a:115c:a1e0::/48";
+        allocation = "random";
+      };
+
       oidc = {
         issuer = "https://key.vfd.ovh";
         client_id = "fac68529-32af-47f6-94ed-6f584fa0ebb7";
@@ -45,7 +51,21 @@
 
       dns = {
         magic_dns = true;
-        base_domain = "tailnet.vfd.ovh";
+        base_domain = "tailnet.${base_domain}";
+
+        nameservers.global = [
+          "1.1.1.3"
+          "1.0.0.3"
+        ];
+
+        nameservers.split."vfd.ovh" = [
+          "192.168.10.215"
+        ];
+      };
+
+      policy = {
+        mode = "file";
+        path = "/var/lib/headscale/acl.json";
       };
     };
   };
