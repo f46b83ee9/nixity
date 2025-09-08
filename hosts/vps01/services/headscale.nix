@@ -47,10 +47,6 @@
         magic_dns = true;
         base_domain = "tailnet.vfd.ovh";
       };
-
-      tls_cert_path = "/dev/null";
-      tls_key_path = "/dev/null";
-      policy.path = "/dev/null";
     };
   };
 

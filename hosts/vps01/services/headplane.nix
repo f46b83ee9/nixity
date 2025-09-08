@@ -5,7 +5,16 @@
 }:
 let
   format = pkgs.formats.yaml {};
-  headscaleConfig = format.generate "headscale.yml" config.services.headscale.settings;
+
+  # A workaround generate a valid Headscale config accepted by Headplane when `config_strict == true`.
+  settings = lib.recursiveUpdate config.services.headscale.settings {
+    acme_email = "/dev/null";
+    tls_cert_path = "/dev/null";
+    tls_key_path = "/dev/null";
+    policy.path = "/dev/null";
+  };
+
+  headscaleConfig = format.generate "headscale.yml" settings;
 in
 {
   sops.secrets."headplane/serverCookieSecret" = {
@@ -31,24 +40,20 @@ in
   services.headplane = {
     enable = true;
     
-    agent = {
-      enable = true;
-      settings = {
-        pre_authkey_path = config.sops.secrets."headplane/integrationAgentPreAuthkeyPath".path;
-      };
-    };
-    
     settings = {
       server = {
           host = "127.0.0.1";
           port = 3000;
           cookie_secret_path = config.sops.secrets."headplane/serverCookieSecret".path;
+          cookie_secure = true;
       };
 
       headscale = {
           url = config.services.headscale.settings.server_url;
           config_path = "${headscaleConfig}";
       };
+
+      integration.proc.enabled = true;
 
       oidc = {
           issuer = "https://key.vfd.ovh";
