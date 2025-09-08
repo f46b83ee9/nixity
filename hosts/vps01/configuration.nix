@@ -1,10 +1,8 @@
 {
-  inputs,
   config,
   lib,
   pkgs,
   modulesPath,
-  headplane,
   ...
 }:
 {
@@ -37,7 +35,7 @@
     pkgs.restic
   ];
 
-  nixpkgs.overlays = [ headplane.overlays.default ];
+  nixpkgs.overlays = [ inputs.headplane.overlays.default ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 

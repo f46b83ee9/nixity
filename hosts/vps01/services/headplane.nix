@@ -5,12 +5,7 @@
 }:
 let
   format = pkgs.formats.yaml {};
-  settings = config.services.headscale.settings // {
-    tls_cert_path = "/dev/null";
-    tls_key_path = "/dev/null";
-    policy.path = "/dev/null";
-  };
-  headscaleConfig = format.generate "headscale.yml" settings;
+  headscaleConfig = format.generate "headscale.yml" config.services.headscale.settings;
 in
 {
   sops.secrets."headplane/serverCookieSecret" = {
@@ -36,6 +31,13 @@ in
   services.headplane = {
     enable = true;
     
+    agent = {
+      enable = true;
+      settings = {
+        pre_authkey_path = config.sops.secrets."headplane/integrationAgentPreAuthkeyPath".path;
+      };
+    };
+    
     settings = {
       server = {
           host = "127.0.0.1";
@@ -46,11 +48,6 @@ in
       headscale = {
           url = config.services.headscale.settings.server_url;
           config_path = headscaleConfig;
-      };
-
-      integration.agent = {
-          enabled = true;
-          pre_authkey_path = config.sops.secrets."headplane/integrationAgentPreAuthkeyPath".path;
       };
 
       oidc = {
