@@ -47,7 +47,7 @@ in
 
       headscale = {
           url = config.services.headscale.settings.server_url;
-          config_path = headscaleConfig;
+          config_path = "${headscaleConfig}";
       };
 
       oidc = {
