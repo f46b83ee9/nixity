@@ -7,22 +7,18 @@
 { 
   sops.secrets."headplane/cookie_secret" = {
     owner = config.services.headplane.user;
-    group = config.services.headplane.group;
   };
 
   sops.secrets."headplane/pre_authkey" = {
     owner = config.services.headplane.user;
-    group = config.services.headplane.group;
   };
 
   sops.secrets."headplane/oidc_client_secret" = {
     owner = config.services.headplane.user;
-    group = config.services.headplane.group;
   };
 
   sops.secrets."headplane/headscale_api_key" = {
     owner = config.services.headplane.user;
-    group = config.services.headplane.group;
   };
 
   services.headplane = {
