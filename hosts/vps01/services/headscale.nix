@@ -28,6 +28,8 @@
         v6 = "fd7a:115c:a1e0::/48";
         allocation = "random";
       };
+      
+      policy.mode = "database";
 
       oidc = {
         issuer = "https://key.vfd.ovh";
@@ -59,11 +61,6 @@
         nameservers.split."vfd.ovh" = [
           "192.168.10.215"
         ];
-      };
-
-      policy = {
-        mode = "file";
-        path = "/var/lib/headscale/acl.json";
       };
     };
   };
