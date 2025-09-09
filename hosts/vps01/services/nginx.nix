@@ -31,7 +31,7 @@
     };
 
     locations."/admin(?:$|/)" = {
-      proxyPass = "http://127.0.0.1:${toString config.services.headscale.settings.metrics_listen_addr}";
+      proxyPass = "http://127.0.0.1:${toString config.services.headplane.settings.server.port}";
       proxyWebsockets = true;
 
       priority = 3;
