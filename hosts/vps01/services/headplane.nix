@@ -6,19 +6,23 @@
 }:
 { 
   sops.secrets."headplane/cookie_secret" = {
-    owner = config.services.headplane.user;
+    owner = config.services.headscale.user;
+    group = config.services.headscale.group;
   };
 
   sops.secrets."headplane/pre_authkey" = {
-    owner = config.services.headplane.user;
+    owner = config.services.headscale.user;
+    group = config.services.headscale.group;
   };
 
   sops.secrets."headplane/oidc_client_secret" = {
-    owner = config.services.headplane.user;
+    owner = config.services.headscale.user;
+    group = config.services.headscale.group;
   };
 
   sops.secrets."headplane/headscale_api_key" = {
-    owner = config.services.headplane.user;
+    owner = config.services.headscale.user;
+    group = config.services.headscale.group;
   };
 
   services.headplane = {
