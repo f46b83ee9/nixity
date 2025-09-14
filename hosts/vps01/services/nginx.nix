@@ -1,5 +1,5 @@
 {
-  config, 
+  config,
   ...
 }:
 {
@@ -73,14 +73,14 @@
   security.acme.acceptTerms = true;
 
   security.acme.defaults = {
-      email = "me@vfd.ovh";
+    email = "me@vfd.ovh";
 
-      dnsProvider = "cloudflare";
-      dnsResolver = "1.1.1.1:53";
+    dnsProvider = "cloudflare";
+    dnsResolver = "1.1.1.1:53";
 
-      environmentFile = config.sops.secrets."cloudflare/env".path;
-      
-      group = config.services.nginx.group;
+    environmentFile = config.sops.secrets."cloudflare/env".path;
+
+    group = config.services.nginx.group;
   };
 
   networking.firewall.allowedTCPPorts = [

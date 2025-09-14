@@ -28,7 +28,7 @@
         v6 = "fd7a:115c:a1e0::/48";
         allocation = "random";
       };
-      
+
       policy.mode = "database";
 
       oidc = {
@@ -59,7 +59,7 @@
         ];
 
         nameservers.split."vfd.ovh" = [
-          "192.168.10.215"
+          "192.168.10.253"
         ];
       };
     };

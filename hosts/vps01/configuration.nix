@@ -8,7 +8,7 @@
 }:
 {
   imports = [
-    (modulesPath + "/profiles/qemu-guest.nix")
+    "${modulesPath}/profiles/qemu-guest.nix"
     ../common/default.nix
     ./disk-configuration.nix
     ./networking.nix

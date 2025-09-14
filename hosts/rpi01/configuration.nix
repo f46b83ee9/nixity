@@ -19,7 +19,10 @@
 
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
-  boot.supportedFilesystems = lib.mkForce [ "ext4" "vfat" ];
+  boot.supportedFilesystems = lib.mkForce [
+    "ext4"
+    "vfat"
+  ];
 
   boot.initrd.availableKernelModules = lib.mkForce [
     "mmc_block"

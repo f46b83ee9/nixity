@@ -4,7 +4,7 @@
   config,
   ...
 }:
-{ 
+{
   sops.secrets."headplane/cookie_secret" = {
     owner = config.services.headscale.user;
     group = config.services.headscale.group;
@@ -27,7 +27,7 @@
 
   services.headplane = {
     enable = true;
-  
+
     settings = {
       server = {
         host = "127.0.0.1";
@@ -35,7 +35,7 @@
         cookie_secret_path = config.sops.secrets."headplane/cookie_secret".path;
         cookie_secure = true;
       };
-  
+
       integration = {
         agent = {
           enabled = true;
@@ -46,23 +46,21 @@
           enabled = true;
         };
       };
-  
+
       headscale = {
         url = config.services.headscale.settings.server_url;
 
-        config_path = "${(pkgs.formats.yaml {}).generate "headscale.yml" (
-          lib.recursiveUpdate
-          config.services.headscale.settings
-          {
+        config_path = "${(pkgs.formats.yaml { }).generate "headscale.yml" (
+          lib.recursiveUpdate config.services.headscale.settings {
             tls_cert_path = "/dev/null";
             tls_key_path = "/dev/null";
             policy.path = "/dev/null";
           }
         )}";
-  
+
         config_strict = true;
       };
-      
+
       oidc = {
         issuer = "https://key.vfd.ovh";
         client_id = "a2225eac-181a-425f-b0a2-a73deae58a7c";
