@@ -9,10 +9,10 @@
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
-  
+
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     nix-rosetta-builder.url = "github:cpick/nix-rosetta-builder";
     nix-rosetta-builder.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -27,7 +27,7 @@
       headplane,
       disko,
       sops-nix,
-      nix-darwin, 
+      nix-darwin,
       nix-rosetta-builder,
       ...
     }:
@@ -47,17 +47,6 @@
         ];
       };
 
-      nixosConfigurations.vps02 = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-
-        system = "x86_64-linux";
-        modules = [
-          disko.nixosModules.disko
-          sops-nix.nixosModules.sops
-          ./hosts/vps02/configuration.nix
-        ];
-      };
-
       nixosConfigurations.rpi01 = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
 
@@ -68,10 +57,32 @@
         ];
       };
 
+      nixosConfigurations.tailnet01 = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+
+        system = "aarch64-linux";
+        modules = [
+          disko.nixosModules.disko
+          sops-nix.nixosModules.sops
+          ./hosts/tailnet01/configuration.nix
+        ];
+      };
+
+      nixosConfigurations.thin01 = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+
+        system = "x86_64-linux";
+        modules = [
+          disko.nixosModules.disko
+          sops-nix.nixosModules.sops
+          ./hosts/thin01/configuration.nix
+        ];
+      };
+
       darwinConfigurations."Dimitris-MacBook-Air" = nix-darwin.lib.darwinSystem {
         inherit specialArgs;
 
-        modules = [ 
+        modules = [
           nix-rosetta-builder.darwinModules.default
           ./hosts/mba/configuration.nix
         ];

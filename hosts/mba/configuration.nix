@@ -1,22 +1,27 @@
-{ inputs, pkgs, ... }: {
-    environment.systemPackages =
-    [   pkgs.vim
-        pkgs.sops
-        pkgs.yq
-        pkgs.caligula
-        pkgs.zstd
-        pkgs.qemu
-        pkgs.k9s
-    ];
+{ inputs, pkgs, ... }:
+{
+  environment.systemPackages = [
+    pkgs.vim
+    pkgs.sops
+    pkgs.yq
+    pkgs.caligula
+    pkgs.zstd
+    pkgs.qemu
+    pkgs.k9s
+    pkgs.nixfmt
+    pkgs.kubectl
+    pkgs.kubelogin-oidc
+    pkgs.restic
+  ];
 
-    security.pam.services.sudo_local.touchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
-    nix.settings.experimental-features = "nix-command flakes";
+  nix.settings.experimental-features = "nix-command flakes";
 
-    nix-rosetta-builder.onDemand = true;
+  nix-rosetta-builder.onDemand = true;
 
-    nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.hostPlatform = "aarch64-darwin";
 
-    system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
-    system.stateVersion = 6;
+  system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
+  system.stateVersion = 6;
 }

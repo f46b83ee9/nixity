@@ -5,26 +5,20 @@
 {
   services.nginx.enable = true;
 
-  services.nginx.virtualHosts."key.vfd.ovh" = {
+  services.nginx.virtualHosts."git.vfd.ovh" = {
     forceSSL = true;
     enableACME = true;
     acmeRoot = null;
 
-    locations."/metrics" = {
-      proxyPass = "http://127.0.0.1:${toString config.services.pocket-id.settings.OTEL_EXPORTER_PROMETHEUS_PORT}";
-    };
-
     locations."/" = {
-      proxyPass = "http://127.0.0.1:${toString config.services.pocket-id.settings.PORT}";
+      proxyPass = "http://127.0.0.1:${toString config.services.forgejo.settings.server.HTTP_PORT}";
       extraConfig = ''
-        proxy_busy_buffers_size   512k;
-        proxy_buffers   4 512k;
-        proxy_buffer_size   256k;
+        client_max_body_size 512M;
       '';
     };
 
     extraConfig = ''
-      access_log /var/log/nginx/${server_url}.access.log;
+      access_log /var/log/nginx/git.vfd.ovh.access.log;
     '';
   };
 
