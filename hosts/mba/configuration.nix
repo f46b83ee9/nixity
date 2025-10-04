@@ -12,6 +12,7 @@
     pkgs.kubectl
     pkgs.kubelogin-oidc
     pkgs.restic
+    pkgs.kubeseal
   ];
 
   security.pam.services.sudo_local.touchIdAuth = true;
