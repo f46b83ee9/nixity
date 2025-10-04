@@ -24,7 +24,7 @@
     };
 
     extraConfig = ''
-      access_log /var/log/nginx/${server_url}.access.log;
+      access_log /var/log/nginx/key.vfd.ovh.access.log;
     '';
   };
 
