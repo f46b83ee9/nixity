@@ -16,7 +16,7 @@
     nix-rosetta-builder.url = "github:cpick/nix-rosetta-builder";
     nix-rosetta-builder.inputs.nixpkgs.follows = "nixpkgs";
 
-    headplane.url = "github:tale/headplane/next";
+    headplane.url = "github:tale/headplane/eb4669498a26f198b5a2b5343114ad685cc5b143";
     headplane.inputs.nixpkgs.follows = "nixpkgs";
   };
 

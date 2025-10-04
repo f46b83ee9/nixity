@@ -15,11 +15,6 @@
     group = config.services.headscale.group;
   };
 
-  sops.secrets."headplane/oidc_client_secret" = {
-    owner = config.services.headscale.user;
-    group = config.services.headscale.group;
-  };
-
   sops.secrets."headplane/headscale_api_key" = {
     owner = config.services.headscale.user;
     group = config.services.headscale.group;
@@ -63,8 +58,8 @@
 
       oidc = {
         issuer = "https://key.vfd.ovh";
-        client_id = "a2225eac-181a-425f-b0a2-a73deae58a7c";
-        client_secret_path = config.sops.secrets."headplane/oidc_client_secret".path;
+        client_id = "fac68529-32af-47f6-94ed-6f584fa0ebb7";
+        client_secret_path = config.sops.secrets."headscale/oidc_client_secret".path;
         disable_api_key_login = false;
         headscale_api_key_path = config.sops.secrets."headplane/headscale_api_key".path;
         redirect_uri = "https://headscale.vfd.ovh/admin/oidc/callback";
