@@ -44,6 +44,10 @@
     pkgs.restic
   ];
 
+  nixpkgs.overlays = [
+    (import ../../overlays/pocket-id.nix)
+  ];
+
   hardware.enableRedistributableFirmware = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
