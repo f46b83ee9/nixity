@@ -1,16 +1,16 @@
 self: super: {
   pocket-id = super.pocket-id.overrideAttrs (
     final: old: {
-      version = "1.13.1";
+      version = "1.14.0";
 
       src = super.fetchFromGitHub {
         owner = "pocket-id";
         repo = "pocket-id";
         tag = "v${final.version}";
-        hash = "sha256-ayMPyc90bnkIhYfBQ8SgcKayjUQSyrcp5SOLGHTKQwE=";
+        hash = "sha256-5F3XchB3kl54Sm45yD9giRd1K3xwPNhFAVYILyY3f2Q=";
       };
 
-      vendorHash = "sha256-+HF1zAWA6Ak7uJqWCcTXrttTy1sPA8bN+/No95eqFTU=";
+      vendorHash = "sha256-CmhPURPNwcpmD9shLrQPVKFGBirEMjq0Z4lmgMCpxS8=";
 
       frontend = old.frontend.overrideAttrs {
         inherit (final) version src;
@@ -19,7 +19,7 @@ self: super: {
           inherit (final) pname version src;
 
           fetcherVersion = 1;
-          hash = "sha256-IVrp5qWYMgud9ryLidrUowWWBHZ2lMrJp0cfPPHpXls=";
+          hash = "sha256-/e1zBHdy3exqbMvlv0Jth7vpJd7DDnWXGfMV+Cdr56I=";
         };
       };
     }
