@@ -1,7 +1,6 @@
 { inputs, pkgs, ... }:
 {
   environment.systemPackages = [
-    pkgs.vim
     pkgs.sops
     pkgs.yq
     pkgs.caligula
@@ -12,12 +11,19 @@
     pkgs.kubectl
     pkgs.kubelogin-oidc
     pkgs.restic
-    pkgs.kubeseal
+    pkgs.yubikey-manager
+    pkgs.openssh
+    pkgs.opkssh
   ];
 
   security.pam.services.sudo_local.touchIdAuth = true;
 
   nix.settings.experimental-features = "nix-command flakes";
+
+  nix.settings.allowed-users = [
+    "@admin"
+    "root"
+  ];
 
   nix-rosetta-builder.onDemand = true;
 
