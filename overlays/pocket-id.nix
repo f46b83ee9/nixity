@@ -1,13 +1,13 @@
 self: super: {
   pocket-id = super.pocket-id.overrideAttrs (
     final: old: {
-      version = "1.14.2";
+      version = "1.15.0";
 
       src = super.fetchFromGitHub {
         owner = "pocket-id";
         repo = "pocket-id";
         tag = "v${final.version}";
-        hash = "sha256-0x80oykzMTEsuGUBtXXdKgWJld8mrDPUssYpAznqKnc=";
+        hash = "sha256-mnmBwQ79sScTPM4Gh9g0x/QTmqm1TgxaOkww+bvs1b4=";
       };
 
       vendorHash = "sha256-CmhPURPNwcpmD9shLrQPVKFGBirEMjq0Z4lmgMCpxS8=";
