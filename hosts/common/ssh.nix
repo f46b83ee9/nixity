@@ -22,7 +22,7 @@
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMT48CcI5L0mXR03igIaNFo+j0WnEAqvQlG+eeZqr9jP"
-    "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIOUeVZ5v2j2QOygXhsq+dueavCKDco1fnSS9hYf2/+BxAAAACHNzaDptYWlu"
+    "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIIjZi3NfZVxJZeRD7wR+iIiGCGRnlDbafukoF3Qf9MSGAAAACnNzaDpzZXJ2ZXI= ssh:server"
   ];
 
   services.opkssh = {
