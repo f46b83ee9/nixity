@@ -14,6 +14,7 @@
     pkgs.yubikey-manager
     pkgs.openssh
     pkgs.opkssh
+    pkgs.kustomize
   ];
 
   security.pam.services.sudo_local.touchIdAuth = true;
