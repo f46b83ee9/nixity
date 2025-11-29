@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e 
 
 # Create a temporary directory
 temp=$(mktemp -d)
@@ -17,4 +18,4 @@ sops decrypt secrets/thin01/secrets.yaml | yq -r '.ssh.ssh_host_ed25519_key' > "
 chmod 600 "$temp/etc/ssh/ssh_host_ed25519_key"
 
 # Install NixOS to the host system with our secrets
-nix run github:nix-community/nixos-anywhere -- --extra-files "$temp" --flake '.#thin01' --target-host root@192.168.10.188
+nix run github:nix-community/nixos-anywhere -- --extra-files "$temp" --flake '.#vps01' --target-host root@192.168.10.188
