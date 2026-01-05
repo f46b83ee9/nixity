@@ -26,6 +26,8 @@
       APP_URL = "https://key.vfd.ovh";
       TRUST_PROXY = true;
 
+      ENCRYPTION_KEY_FILE = config.sops.secrets."pocketid/encryption_key".path;
+
       METRICS_ENABLED = true;
       OTEL_METRICS_EXPORTER = "prometheus";
       OTEL_EXPORTER_PROMETHEUS_HOST = "127.0.0.1";
